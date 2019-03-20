@@ -1,0 +1,17 @@
+<img src="{{ album1.logo }}" width="300" height="350">
+<h1>{{ album1.album_name }}</h1>
+<h2>{{ album1.artist }}</h2>
+
+<form action="{% url 'music:favourite' album1.pk %}" method="post">
+    {% for i in album1.music_set.all %}
+        {% csrf_token %}
+        <input type="radio" name="song" value="{{ i.pk }}" id="song{{ forloop.counter }}" />
+        <label for="song{{ forloop.counter }}">
+            {{ i.song_title }}-{{ i.file_type }}
+            {% if i.is_favourite %}
+                <img src="static/music/favicon.ico"/>
+            {% endif %}
+        </label><br>
+    {% endfor %}
+    <button type="submit" value="success">Favourite</button>
+</form>
